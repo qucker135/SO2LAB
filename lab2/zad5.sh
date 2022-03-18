@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 #
-# Systemy operacyjne 2 – laboratorium nr 2 – semestr letni 2020/2021
+# Systemy operacyjne 2 – laboratorium nr 2
 #
 # Celem zajęć jest nabranie doświadczenia w podstawowej pracy z powłoką Bash,
 # w szczególności w nawigowaniu po drzewie katalogów i sprawdzaniu uprawnień.
+# Proszę unikać wykorzystywania narzędzia `find` w ramach bieżących zajęć.
 #
-# Przygotowane rozwiązania nie muszą być całkowicie uniwersalne. Zakładamy,
-# że ogólna struktura katalogów się nie zmienia (nie będzie już więcej/mniej
-# poziomów podkatalogów), jednakże same nazwy i zawartości plików (o ile
-# nie są podane wprost w treści zadań) mogą być dowolne i ulegać zmianie,
-# a przygotowane rozwiązania nadal powinny działać.
+# Nie przywiązujemy wagi do środowiska roboczego – zakładamy, że jego pliki,
+# inne niż te podane wprost w treści zadań, mogą ulec zmianie, a przygotowane
+# rozwiązania nadal powinny działać poprawnie (robić to, o czym zadanie mówi).
 #
 # Wszystkie chwyty dozwolone, ale ostatecznie w wyniku ma powstać tylko to,
 # o czym mowa w treści zadania – tworzone samodzielnie ewentualne tymczasowe
@@ -18,15 +17,9 @@
 
 #
 # Zadanie 5.
-# Utworzyć katalog o nazwie `głęboki` wewnątrz katalogu `ddd` i skopiować
-# do niego wszystkie pliki zwyczajne (żadnych folderów!) znajdujące się
-# w katalogu `bbb` i ewentualnych jego podkatalogach.
-# Zakładamy, że katalog `głęboki` mógł już wcześniej istnieć – w takim
-# przypadku nie należy tworzyć go na nowo, ale upewnić się, że podczas
-# kopiowania nie nadpiszemy żadnych istniejących w nim plików!
+# Odnaleźć nazwy plików z katalogu `dane/icao/`, których brakuje w katalogu
+# `dane/backup/`. Nie zwracamy uwagi na zawartość ani ustawienia istniejących
+# plików, porównujemy tylko ich nazwy. Każdą nazwę wyświetlić w osobnej linii.
 #
 
-#find -type f -path "./ddd/*"
-[ -d ddd/głęboki ] || mkdir ddd/głęboki;
-cp -n $(find -type f -path "./bbb/*") ddd/
-
+diff dane/backup dane/icao | grep dane/icao | cut -d' ' -f4

@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 #
-# Systemy operacyjne 2 – laboratorium nr 2 – semestr letni 2020/2021
+# Systemy operacyjne 2 – laboratorium nr 2
 #
 # Celem zajęć jest nabranie doświadczenia w podstawowej pracy z powłoką Bash,
 # w szczególności w nawigowaniu po drzewie katalogów i sprawdzaniu uprawnień.
+# Proszę unikać wykorzystywania narzędzia `find` w ramach bieżących zajęć.
 #
-# Przygotowane rozwiązania nie muszą być całkowicie uniwersalne. Zakładamy,
-# że ogólna struktura katalogów się nie zmienia (nie będzie już więcej/mniej
-# poziomów podkatalogów), jednakże same nazwy i zawartości plików (o ile
-# nie są podane wprost w treści zadań) mogą być dowolne i ulegać zmianie,
-# a przygotowane rozwiązania nadal powinny działać.
+# Nie przywiązujemy wagi do środowiska roboczego – zakładamy, że jego pliki,
+# inne niż te podane wprost w treści zadań, mogą ulec zmianie, a przygotowane
+# rozwiązania nadal powinny działać poprawnie (robić to, o czym zadanie mówi).
 #
 # Wszystkie chwyty dozwolone, ale ostatecznie w wyniku ma powstać tylko to,
 # o czym mowa w treści zadania – tworzone samodzielnie ewentualne tymczasowe
@@ -18,10 +17,13 @@
 
 #
 # Zadanie 6.
-# Odnaleźć w katalogu `bbb` plik, którego zawartość pokrywa się z zawartością
-# pliku `bardzo tajna treść` (jest on w katalogu `ddd`) i skopiować znaleziony
-# plik do katalogu `ddd`, jeśli jeszcze go tam nie ma.
+# Przeczytać zawartość pliku `dane/Zahlen.txt` i obliczyć sumę wszystkich
+# znajdujących się tam liczb. Na koniec wyświetlić tylko wynik, nic więcej.
 #
 
-#grep -l $(find -type f -path './bbb/*') -e "^"$(cat ddd/'bardzo tajna treść')"$"
-cp -n $(grep -l $(find -type f -path './bbb/*') -e "^"$(cat ddd/'bardzo tajna treść')"$") ddd/
+x=0
+while read p; do
+ #echo $p;
+ ((x=x+p))
+done < dane/Zahlen.txt
+echo $x

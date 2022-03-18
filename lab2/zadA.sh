@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 #
-# Systemy operacyjne 2 – laboratorium nr 2 – semestr letni 2020/2021
+# Systemy operacyjne 2 – laboratorium nr 2
 #
 # Celem zajęć jest nabranie doświadczenia w podstawowej pracy z powłoką Bash,
 # w szczególności w nawigowaniu po drzewie katalogów i sprawdzaniu uprawnień.
+# Proszę unikać wykorzystywania narzędzia `find` w ramach bieżących zajęć.
 #
-# Przygotowane rozwiązania nie muszą być całkowicie uniwersalne. Zakładamy,
-# że ogólna struktura katalogów się nie zmienia (nie będzie już więcej/mniej
-# poziomów podkatalogów), jednakże same nazwy i zawartości plików (o ile
-# nie są podane wprost w treści zadań) mogą być dowolne i ulegać zmianie,
-# a przygotowane rozwiązania nadal powinny działać.
+# Nie przywiązujemy wagi do środowiska roboczego – zakładamy, że jego pliki,
+# inne niż te podane wprost w treści zadań, mogą ulec zmianie, a przygotowane
+# rozwiązania nadal powinny działać poprawnie (robić to, o czym zadanie mówi).
 #
 # Wszystkie chwyty dozwolone, ale ostatecznie w wyniku ma powstać tylko to,
 # o czym mowa w treści zadania – tworzone samodzielnie ewentualne tymczasowe
@@ -18,32 +17,13 @@
 
 #
 # Zadanie 10.
-# Stworzyć zestaw nowych plików w katalogu `zasoby` w `ddd`. Nazwy plików
-# do utworzenia zostały podane w kilku plikach `nazwy-1`, `nazwy-2`, itd.,
-# które również znajdują się w katalogu `ddd`. Zawartość tworzonych plików
-# powinna stanowić liczba, mówiąca ile razy dana nazwa została powtórzona
-# w plikach źródłowych `nazwa-...` – to znaczy, domyślnie nowo tworzone pliki
-# mają mieć jako zawartość zero (0), jeśli dana nazwa się powtórzy (plik już
-# istnieje) to zwiększamy tę wartość na jeden, dwa, itd.
-# Zadbać o to, aby każde uruchomienie skryptu miało ten sam efekt – czyli
-# aby po drugim uruchomieniu nadal istniały pliki o wartości zero.
-# Upewnić się przy tym, że nie usuniemy/nadpiszemy niczego, co było pierwotnie
-# w katalogu `zasoby` (możemy zmodyfikować tylko pliki, które podano w plikach
-# źródłowych `nazwa-...`; każda nazwa to osobna linia w tych plikach).
+# W katalogu `dane/deep/` i wszystkich jego podkatalogach odnaleźć wszystkie
+# pliki zwykłe, których nie możemy przeczytać ze względu na brak uprawnień
+# dostępu. Zwrócić ścieżki do odnalezionych plików względem katalogu `dane/`.
+# Opracowany skrypt powinien działać niezależnie od istniejącej liczby
+# i poziomów podkatalogów.
+#
+# Wskazówka: pomocne może być zdefiniowanie funkcji i jej rekurencje wywołanie.
 #
 
-IFS=$'\n'
-#printf %q "$IFS"
-for file in $(cat ddd/nazwy-* | sort -u)
-do
-	#echo $i
-	touch ddd/zasoby/$file
-	c=-1
-	for occ in $(cat ddd/nazwy-*)
-	do
-		#echo $occ
-		#echo $file
-		[[ $occ == $file ]] && ((c=c+1))
-	done
-	echo $c > ddd/zasoby/$file
-done
+find dane/deep \( -type f -not -perm -g=r \) -exec realpath --relative-to=dane {} \;
