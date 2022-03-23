@@ -26,6 +26,7 @@
 # rozdzielone jedną spacją (<rozmiar> <nazwa>\n).
 #
 
-for file in $(find linux-5.11.13 -size +1M -size -10M ! -name "*[0-9]*"); do
-	echo -n $(stat -c "%s" $file) && echo -n " " && echo $(basename $file)
-done
+#for file in $(find linux-5.11.13 -size +1M -size -10M ! -name "*[0-9]*"); do
+#	echo -n $(stat -c "%s" $file) && echo -n " " && echo $(basename $file)
+#done
+find linux-5.11.13 -size +1M -size -10M ! -name "*[0-9]*" -printf "%s %f\n"
