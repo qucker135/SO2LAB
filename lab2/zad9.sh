@@ -24,5 +24,7 @@
 #
 
 while read -r p; do
- [ -f dane/"$p" ] || echo "$p";
+ if [ ! -f dane/"$p" ]; then
+ 	echo "$p";
+ fi
 done < <(cat dane/tajne)

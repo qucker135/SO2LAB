@@ -22,4 +22,13 @@
 # plików, porównujemy tylko ich nazwy. Każdą nazwę wyświetlić w osobnej linii.
 #
 
-diff dane/backup dane/icao | grep dane/icao | cut -d' ' -f4
+#SPOSOB 1
+#diff dane/backup dane/icao | grep dane/icao | cut -d' ' -f4
+
+#SPOSOB 2
+for file in dane/icao/*; do
+	#echo $file
+	if [ ! -f dane/backup/${file#*/*/} ]; then
+		echo ${file#*/*/}
+	fi
+done

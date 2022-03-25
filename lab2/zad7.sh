@@ -24,9 +24,17 @@
 # przeczytać (mamy prawo do odczytu – aby uniknąć błędów).
 #
 
-IFS=$'\n'
-find $(grep -l $(find dane/kontrola -type f -perm -g=r) -e "^"$(cat dane/poszukiwany)"$") -exec basename {} \;
+#IFS=$'\n'
+#find $(grep -l $(find dane/kontrola -type f -perm -g=r) -e "^"$(cat dane/poszukiwany)"$") -exec basename {} \;
 #cat dane/poszukiwany
 #74236617e4807bb430d602d49ee50701
 #find dane/kontrola -type f 
 #find dane/kontrola -type f -perm -g=r
+
+content=$(cat dane/poszukiwany)
+
+for file in dane/kontrola/*; do
+	if [[ -r "$file" && $(cat "$file") == $content ]]; then
+		echo "${file#*/*/}" # alternatywnie basename - skrypt dojdzie do jego wywołania tylko dla jednego pliku, więc wydajność raczej nie stanowi problemu
+	fi
+done

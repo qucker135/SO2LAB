@@ -22,4 +22,13 @@
 # Kolejność łączenia plików nie ma znaczenia.
 #
 
-cat $(find dane/icao/ -type f ! -perm -g=w)
+#SPOSOB 1
+#cat $(find dane/icao/ -type f ! -writeable )
+
+#SPOSOB 2
+
+for file in dane/icao/*; do
+	if [ ! -w $file ]; then
+		cat $file
+	fi
+done

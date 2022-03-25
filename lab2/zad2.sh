@@ -22,5 +22,8 @@
 # wyświetlić napis `nie ma`. Nie wyświetlać nic więcej.
 #
 
-[ -f dane/drugi ] && echo jest;
-[ -f dane/drugi ] || echo "nie ma";
+if [ -f dane/drugi ]; then
+	echo jest
+else
+	echo "nie ma"
+fi

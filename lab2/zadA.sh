@@ -26,4 +26,18 @@
 # Wskazówka: pomocne może być zdefiniowanie funkcji i jej rekurencje wywołanie.
 #
 
-find dane/deep \( -type f -not -perm -g=r \) -exec realpath --relative-to=dane {} \;
+#SPOSOB 1
+#find dane/deep \( -type f -not -perm -g=r \) -exec realpath --relative-to=dane {} \;
+
+#SPOSOB 2
+search(){
+	for object in $1/* $1/.[^.]*; do
+		if [ -f "$object" ] && [ ! -r "$object" ]; then
+			echo $(realpath $object --relative-to=$2)
+		elif [ -d "$object" ]; then
+			search $object $2
+		fi
+	done
+}
+
+search dane/deep/ dane/

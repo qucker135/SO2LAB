@@ -23,5 +23,19 @@
 # plików względem katalogu `dane/`. Każdą ścieżkę wyświetlić w osobnej linii.
 #
 
-IFS=$'\n'
-find dane/ -maxdepth 2 -type f -perm -g=x -exec realpath --relative-to=dane {} \;
+#IFS=$'\n'
+#SPOSOB 1
+#find dane/ -maxdepth 2 -type f -perm -g=x -exec realpath --relative-to=dane {} \;
+
+#SPOSOB 2
+for object in dane/*; do
+	if [ -f "$object" ] && [ -x "$object" ]; then
+		echo $(realpath --relative-to=dane "$object")
+	elif [ -d "$object" ]; then
+		for file in "$object"/*; do
+			if [ -f "$file" ]  && [ -x "$file" ]; then
+				echo $(realpath --relative-to=dane "$file")	
+			fi
+		done
+	fi
+done

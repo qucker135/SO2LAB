@@ -22,7 +22,15 @@
 # Jeśli czegoś brakuje to wyświetlić `nok`.
 #
 
-[ ! -f dane/trzeci ] && echo nok && exit;
-content=$(cat dane/trzeci)
-[[ $content == "Ala ma kota." ]] && echo ok && exit;
-echo nok;
+#SPOSOB 1
+#[ ! -f dane/trzeci ] && echo nok && exit;
+#content=$(cat dane/trzeci)
+#[[ $content == "Ala ma kota." ]] && echo ok && exit;
+#echo nok;
+if [ ! -f dane/trzeci ]; then
+	echo nok;
+elif [[ $(cat dane/trzeci) == "Ala ma kota." ]]; then
+	echo ok;
+else
+	echo nok;
+fi
