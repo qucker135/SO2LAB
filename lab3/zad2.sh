@@ -24,4 +24,6 @@
 # jeśli jakikolwiek plik o nazwie `drugi` już istnieje w `ddd`.
 #
 
-[ -e ddd/drugi ] || ln -s ../aaa/podstawa ddd/drugi
+if [ ! -e ddd/drugi ]; then
+	ln -s ../aaa/podstawa ddd/drugi
+fi

@@ -23,4 +23,8 @@
 # jeśli jakikolwiek plik o nazwie `pierwszy` już istnieje w `ddd`.
 #
 
-[ -e ddd/pierwszy ] || ln aaa/podstawa ddd/pierwszy
+#[ -e ddd/pierwszy ] || ln aaa/podstawa ddd/pierwszy
+
+if [ ! -e ddd/pierwszy ]; then
+	ln aaa/podstawa ddd/pierwszy
+fi

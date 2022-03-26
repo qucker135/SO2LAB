@@ -17,15 +17,18 @@
 #
 
 #
-# Zadanie 6.
+# Zadanie 6. - do poprawy
 # Odnaleźć wszystkie dowiązania miękkie, zdefiniowane w katalogu `ccc`, które
 # poprawnie wskazują na jakieś miejsce w systemie plików (ich cel istnieje).
 # Wyświetlić ścieżki do wskazywanych miejsc, konstruując je jako ścieżki
 # względem katalogu domowego bieżącego użytkownika (zmienna ${HOME}).
 #
 
-IFS=$'\n'
-for i in $(find ccc -type l -exec readlink -e {} +)
-do
-	echo "~/"${i#/*/*/}
+for link in ccc/*; do 
+	if [ -h "$link" ]; then
+		path=$(readlink "$link")
+		if [ -e ccc/"$path" ]; then
+			realpath --relative-to="${HOME}" ccc/"$path"
+		fi
+	fi
 done

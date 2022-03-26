@@ -24,4 +24,11 @@
 # Nie wyświetlać nic ponadto!
 #
 
-find ccc -xtype l 2> /dev/null
+for link in ccc/*; do 
+	if [ -h "$link" ]; then
+		path=$(readlink "$link")
+		if [ ! -e ccc/"$path" ]; then
+			echo "$path"
+		fi
+	fi
+done

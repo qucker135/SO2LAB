@@ -17,7 +17,7 @@
 #
 
 #
-# Zadanie 8.
+# Zadanie 8. 
 # Odszukać w katalogu `ccc` wiszące dowiązania i podjąć próbę ich naprawy
 # – zakładamy, że wskazywane przez nie nazwy plików są poprawne, ale doszło
 # do jakiegoś zamieszania w strukturze katalogów. Należy odszukać pasujących
@@ -26,16 +26,49 @@
 # (na przykład: bravo:../aaa/bravo).
 #
 
-IFS=$'\n'
-for path in $(find ccc -xtype l -exec readlink {} + 2> /dev/null)
-do
-	[[ $path == ../* ]] && echo $path":"$path
-	[[ $path == aaa/* ]] && echo $path":../"$path
-	[[ $path == bbb/* ]] && echo $path":../"$path
-	[[ ! $path == */* && ( -h bbb/$path || -e bbb/$path ) ]] && echo $path":../bbb/"$path
-	[[ ! $path == */* && ( -h aaa/$path || -e aaa/$path ) ]] && echo $path":../aaa/"$path
+#IFS=$'\n'
+#for path in $(find ccc -xtype l -exec readlink {} + 2> /dev/null)
+#do
+#	echo $path
+#	[[ $path == ../* ]] && echo $path":"$path
+#	[[ $path == aaa/* ]] && echo $path":../"$path
+#	[[ $path == bbb/* ]] && echo $path":../"$path
+#	[[ ! $path == */* && ( -h bbb/$path || -e bbb/$path ) ]] && echo $path":../bbb/"$path
+#	[[ ! $path == */* && ( -h aaa/$path || -e aaa/$path ) ]] && echo $path":../aaa/"$path
+#
+#	#[[ ! $path == */* ]] && [ -h bbb/$path ] || [ -e bbb/$path ] && echo $path
+#	#[[ $path == */* ]] || [ ! -h ../aaa/$path ] || echo $path #|| [ ! -h ../aaa/$path ] || echo $path":../aaa/"$path
+#	#[[ $path == */* ]] || [ ! -e ../bbb/$path ] || [ ! -h ../bbb/$path ] || echo $path":../bbb/"$path
+#done
+#for link in ccc/*; do 
+#	if [ -h "$link" ]; then #&& [ -e "$(readlink "$link")" ]; then
+#		path="$(readlink "$link")"
+#		if [ ! -e ccc/"$path" ]; then
+#			for file in aaa/*; do
+#				if [[ "$(basename "$file")" == "$(basename "$file")" ]]; then
+#					echo $path":"$file
+#				fi
+#			done
+#			for file in bbb/*; do
+#				if [[ "$(basename "$file")" == "$(basename "$file")" ]]; then
+#					echo $path":"$file
+#				fi
+#			done
+#		fi
+#	fi
+#done
 
-	#[[ ! $path == */* ]] && [ -h bbb/$path ] || [ -e bbb/$path ] && echo $path
-	#[[ $path == */* ]] || [ ! -h ../aaa/$path ] || echo $path #|| [ ! -h ../aaa/$path ] || echo $path":../aaa/"$path
-	#[[ $path == */* ]] || [ ! -e ../bbb/$path ] || [ ! -h ../bbb/$path ] || echo $path":../bbb/"$path
+for link in ccc/*; do 
+	if [ -h "$link" ]; then
+		path=$(readlink "$link")
+		if [ ! -e ccc/"$path" ] && [ ! -h ccc/"$path" ]; then
+			bname="$(basename "$path")"
+			if [ -e aaa/"$bname" ] || [ -h aaa/"$bname" ]; then
+				echo "$link:../aaa/$bname"
+			fi
+			if [ -e bbb/"$bname" ] || [ -h bbb/"$bname" ]; then
+				echo "$link:../bbb/$bname"
+			fi
+		fi
+	fi
 done

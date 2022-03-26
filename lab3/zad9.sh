@@ -30,14 +30,9 @@
 
 [ $# -eq 0 ] && exit 1
 
-#[ "$1" == "$2" ] && echo "rowne"
-
-IFS=$'\n'
-
-for linkname in $(find ccc -type l)
-do
-	#echo $linkname
-	#echo $(readlink $linkname)
-	#echo $1
-	[ $(readlink $linkname) == $1 ] && echo $linkname
+for link in ccc/*; do
+	if [ -h "$link" ] && [[ $(readlink "$link") == "$1" ]]; then
+		echo "$link"
+	fi
 done
+

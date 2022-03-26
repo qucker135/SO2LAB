@@ -29,16 +29,8 @@
 #
 
 [[ $# -eq 0 || $# -eq 1 ]] && exit 1
-[ -d $1 ] || exit 1
-[ -e $2 ] || exit 1
-#echo "Przynajmniej 2 args"
+[ -d "$1" ] || exit 1
+[ -e "$2" ] || exit 1
 
-IFS=$'\n'
+find "$1" -samefile "$2"
 
-find $1 -samefile $2
-
-#for linkname in $(find $1 -type f)
-#do
-#		
-#	#[ $(readlink $linkname) == $2 ] && echo $linkname
-#done

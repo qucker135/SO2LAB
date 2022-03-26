@@ -25,8 +25,11 @@
 # przez dowiązanie nie ma dla nas znaczenia.
 #
 
-IFS=$'\n'
-for path in $(find bbb -type l -exec readlink {} +)
-do
-	[[ "$path" == /* ]] && echo $(realpath -m $path)
-done
+for link in bbb/*; do
+	if [ -h "$link" ] ; then
+		path="$(readlink "$link")"
+		if [[ "$path" =~ ^/ ]]; then
+			realpath -m "$path"
+		fi
+	fi
+done > ddd/linki

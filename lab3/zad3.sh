@@ -26,10 +26,10 @@
 
 for file in aaa/*
 do
-	#echo $file
-	#t=${file##*/}
-	#echo $t
-	#echo ddd/$t
-	#echo ddd/${file##*/} # -e nie sprawdza dowiązań symbolicznych!!!
-	[ -x $file ] && [ ! -e ddd/${file##*/} ] && [ ! -h ddd/${file##*/} ] && ln -s ../${file} ddd/${file##*/}
+	if [ -f "$file" ] && [ -x "$file" ]; then
+		name=$(realpath --relative-to=aaa "$file")
+		if [ ! -e ddd/"$name" ] && [ ! -h ddd/"$name" ]; then
+			ln -s "../aaa/$name" "ddd/$name"
+		fi
+	fi
 done

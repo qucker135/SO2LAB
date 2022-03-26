@@ -26,6 +26,17 @@
 
 # do katalogow mozliwe jedynie linki symboliczne!!!
 
-[ -h ddd/aaa ] || ln -s ../aaa ddd/aaa
-[ -h ddd/bbb ] || ln -s ../bbb ddd/bbb
-[ -h ddd/ccc ] || ln -s ../ccc ddd/ccc
+#[ -h ddd/aaa ] || ln -s ../aaa ddd/aaa
+#[ -h ddd/bbb ] || ln -s ../bbb ddd/bbb
+#[ -h ddd/ccc ] || ln -s ../ccc ddd/ccc
+
+if [ ! -h ddd/aaa ]; then
+	ln -s ../aaa ddd/aaa
+fi
+if [ ! -h ddd/bbb ]; then
+	ln -s ../bbb ddd/bbb
+fi
+if [ ! -h ddd/ccc ]; then
+	ln -s ../ccc ddd/ccc
+fi
+
