@@ -28,4 +28,4 @@
 # pliku ze strony: https://people.sc.fsu.edu/~jburkardt/data/csv/csv.html
 #
 
-awk 'BEGIN{FS = ","}; NR == 1 {LINES = NF}; NR != 1 && NF != LINES {print NR}' dodatkowe/cities.csv
+awk 'BEGIN{FS = ","}; NR == 1 {LINES = NF}; NF != LINES {print NR}' dodatkowe/cities.csv

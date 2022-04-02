@@ -49,10 +49,7 @@ $1=="Prowadzący:"{
 	while(substr(INDEX, 1, 1)==" "){
 		INDEX=substr(INDEX, 2);
 	}
-	INDEX=substr(INDEX, 13); #pozbycie sie slowa "Prowadzacy:"
-	while(substr(INDEX, 1, 1)==" "){
-		INDEX=substr(INDEX, 2);
-	}
+	INDEX=substr(INDEX, 12); #pozbycie sie slowa "Prowadzacy:"
 	#print INDEX;
 	BEGUN=1
 	CHARS=0

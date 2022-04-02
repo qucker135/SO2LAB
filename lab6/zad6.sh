@@ -25,4 +25,4 @@
 # rozmiar w Bajtach. Jako wynik zwrócić liczbę w MebiBajtach.
 #
 
-find coreutils-8.32 -type f -exec stat --format="%s" {} \; | awk 'BEGIN {SUM = 0}; {SUM += $1}; END{print SUM/1048576.0}'
+find coreutils-8.32 -printf "%s\n" | awk 'BEGIN {SUM = 0}; {SUM += $1}; END{print SUM/1048576.0}'

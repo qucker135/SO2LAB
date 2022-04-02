@@ -27,10 +27,13 @@
 # tekst po przekształceniu.
 #
 
-awk '{
-	CHARS = 0;
+awk '
+BEGIN{
+	CHARS=0;
 	FS=" ";
 	ORS="";
+}
+{
 	for ( i = 1; i <= NF; i++) {
 		if ( CHARS == 0 ) {
 			print $i;
