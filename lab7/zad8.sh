@@ -15,26 +15,32 @@
 #
 
 #
-# Zadanie 9.
-# Proszę wyświetlić komentarze z bieżącego pliku z zadaniami ($0), wstawiając
-# znaki niełamliwej spacji języka HTML (&nbsp;) za wszystkimi pojedynczymi
-# literami w tekście.
+# Zadanie 8.
+# Przetworzyć zawartość pliku `dodatkowe/sensors.txt` i wyświetlić całą jego
+# zawartość, ale podmieniając w locie zapisane tam wartości temperatur ze skali
+# Celsjusza na Fehrenheita: T[°F] = T[°C] * 9/5 + 32.
 #
 
-awk 'BEGIN{
-	ORS="";
-}
-/^#/{
-	for(i=1;i<=NF;i++){
-		if($i ~ /^[a-z]$/){
-			print $i"&nbsp;";
-		}
-		else if(i!=NF){
-			print $i" ";
-		}
-		else{
-			print $i;
-		}
+
+awk '{
+	#poczatek przetwarzania linii
+	LINE = $0
+	POZ = match(LINE, /([0-9]+.[0-9]+)°C/, TAB)	
+
+	while(POZ!=0)
+	{
+		#wyswietlenie frgamentu poprzedzajacego
+		printf substr(LINE, 1, POZ-1)
+		
+		#przyciecie zmiennej
+		POZ = match(LINE, /°C/)
+		LINE = substr(LINE, POZ+2)
+		
+		#przetworzenie i wyswietlenie temperatury
+		printf TAB[1] * 1.8 + 32
+		printf "°F"
+
+		POZ = match(LINE, /([0-9]+.[0-9]+)°C/, TAB)	
 	}
-	print "\n";
-}' zad9.sh
+	print LINE;
+}' dodatkowe/sensors.txt
